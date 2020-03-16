@@ -1,13 +1,32 @@
-import { LandingService } from './landing.service';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { LandingService } from "./landing.service";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css']
+  selector: "app-landing",
+  templateUrl: "./landing.component.html",
+  styleUrls: ["./landing.component.css"]
 })
 export class LandingComponent implements OnInit {
+  types = [
+    {
+      id: 0,
+      nom: "إحتكار"
+    },
+    {
+      id: 1,
+      nom: "عدم غلق"
+    },
+    {
+      id: 2,
+      nom: "مغادرة الحجر الصحي"
+    },
+    {
+      id: 3,
+      nom: "زيادة في الأسعار"
+    }
+  ];
   Gouvernorat = [
     {
       nom: "Ariana",
@@ -394,37 +413,56 @@ export class LandingComponent implements OnInit {
       ]
     }
   ];
-  Tickets = []
+  Tickets = [];
   selectedIndex: any;
-  pageId = 0
+  pageId = 0;
   public TicketForm: FormGroup;
-  constructor(private _formBuilder: FormBuilder,
+  constructor(
+    private router: Router,
+    private _formBuilder: FormBuilder,
     private mainSerivce: LandingService
-  ) { }
+  ) {}
   ngOnInit(): void {
     this.TicketForm = this._formBuilder.group({
       state: ["", Validators.required],
       city: ["", Validators.required],
       locationDescription: ["", Validators.required],
       description: ["", Validators.required],
-      type: [1, Validators.required],
+      type: [null, Validators.required],
       title: ["", Validators.required],
       media: ["", Validators.required],
-      tel: ["", Validators.required],
-      email: ["", [Validators.required]],
-      priority: ["", [Validators.required]],
-
+      tel: [null],
+      fullName: [""],
+      madeBy: ["", [Validators.required]]
     });
   }
   changePage() {
-    console.log("ee")
-    this.pageId++
+    console.log("ee");
+    this.pageId++;
     if (this.pageId == 1) {
-      this.mainSerivce.getTicketsByStateAndCity(this.TicketForm.get("state").value, this.TicketForm.get("city").value).subscribe(res => {
-        this.Tickets = res;
-      });
+      this.mainSerivce
+        .getTicketsByStateAndCity(
+          this.TicketForm.get("state").value,
+          this.TicketForm.get("city").value
+        )
+        .subscribe(res => {
+          this.Tickets = res;
+          this.Tickets.forEach(element => {
+            if (element.type == 0) {
+              element.type = "إحتكار";
+            }
+            if (element.type == 1) {
+              element.type = "عدم غلق";
+            }
+            if (element.type == 2) {
+              element.type = "مغادرة الحجر الصحي";
+            }
+            if (element.type == 3) {
+              element.type = "زيادة في الأسعار";
+            }
+          });
+        });
     }
-
   }
   gouvernoratChange(e) {
     this.Gouvernorat.forEach((city, index) => {
@@ -435,8 +473,10 @@ export class LandingComponent implements OnInit {
     });
   }
   addTicket() {
-    this.mainSerivce.ajouterTicket(this.TicketForm.getRawValue()).subscribe(res => {
-      console.log(res)
-    })
+    this.mainSerivce
+      .ajouterTicket(this.TicketForm.getRawValue())
+      .subscribe(res => {
+        location.reload();
+      });
   }
 }
