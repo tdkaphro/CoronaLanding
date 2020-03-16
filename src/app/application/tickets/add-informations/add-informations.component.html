@@ -1,0 +1,56 @@
+<div fxLayoutGap="45px" fxLayout="column" fxLayoutAlign="center center" class="margin-top45 bgGrey">
+    <div class=" container" style="padding: 25px ;" fxLayoutGap="40px" fxLayoutGap.xs="10px" fxLayout="column">
+        <div class="title fontCairo paddingLpaddingR  mt-40 mb-20" style="text-align: center;"
+            fxLayoutAlign="center center">في البداية نحبو نشكروك
+            على التبليغ و
+            مساهمتك
+            في
+            مساعدة بلادنا</div>
+        <div class=" mb-20 " fxLayoutAlign="center center">
+            <img src="assets/tunisia.png"></div>
+        <div class="title fontCairo paddingLpaddingR   mb-20" style="text-align: center;" fxLayoutAlign="center center">
+            كان تحب تزيد
+            تعاونا خليلنا معطياتك
+            و تنجم متطتش كل شيئ
+            تأكد إنو معلوماتك بش تكون محفوظة بكل سرية</div>
+
+
+        <div class="w-100" fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+            <div class="w-70">
+                <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+                    <input autocomplete="off" style="direction:RTL ;text-align: right  " matInput name="prenom"
+                        formControlName="prenom" placeholder="المكان بالتدقيق
+                    " required pattern="[a-zA-Z ]*" />
+                    <mat-error>
+                        le nom compose seulement des caractéres
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class=" title fontCairo w-30" ngClass.xs="titlexs" fxLayoutAlign="center center">
+                : الإسم و اللقب
+            </div>
+        </div>
+        <div class="w-100" fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+            <div class="w-70">
+                <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+                    <input autocomplete="off" style="text-align: right; direction:RTL" matInput name="prenom"
+                        formControlName="prenom" placeholder="المكان بالتدقيق
+                    " required pattern="[a-zA-Z ]*" />
+                    <mat-error>
+                        le nom compose seulement des caractéres
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class=" title fontCairo w-30" ngClass.xs="titlexs" fxLayoutAlign="center center">
+                : رقم الهاتف
+            </div>
+
+        </div>
+
+
+
+        <div fxLayoutAlign="center center"><button class="mb-40 fontCairo padding1070" mat-raised-button color="primary"
+                [routerLink]="['/finishTicket']" routerLinkActive="router-link-active">إضافة
+            </button></div>
+    </div>
+</div>

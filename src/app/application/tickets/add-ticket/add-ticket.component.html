@@ -1,0 +1,98 @@
+<div class="div" fxLayoutGap="45px" fxLayout="column" class="padding-top45 bgGrey" fxLayoutAlign="center center">
+    <div class="container" style="padding: 25px ;" fxLayoutGap="40px" fxLayoutGap.xs="10px" fxLayout="column">
+
+        <div class="w-100  mt-40 " fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutGap.xs="0px"
+            fxLayoutAlign="space-around center">
+            <div class="w-70">
+                <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+                    <input autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom"
+                        formControlName="prenom" placeholder="المكان بالتدقيق
+                    " required pattern="[a-zA-Z ]*" />
+                    <mat-error>
+                        le nom compose seulement des caractéres
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class=" title fontCairo w-30" fxLayoutAlign="center center">
+                : المكان بالتدقيق
+            </div>
+        </div>
+        <div class="w-100" fxLayoutAlign="row" fxLayoutGap="40px" fxLayoutGap.xs="0px"
+            fxLayoutAlign="space-around center" fxLayout.xs="column-reverse">
+            <div class="w-70">
+                <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+
+                    <textarea autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom"
+                        formControlName="prenom" placeholder="المكان بالتدقيق" required pattern="[a-zA-Z ]*"></textarea>
+                    <mat-error>
+                        le nom compose seulement des caractéres
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class=" title fontCairo w-30" fxLayoutAlign="center center">
+                : وصف التجاوز
+            </div>
+
+        </div>
+        <div class="w-100" fxLayoutAlign="row" fxLayoutGap="40px" fxLayoutGap.xs="0px"
+            fxLayoutAlign="space-around center" fxLayout.xs="column-reverse">
+            <div class="w-70">
+                <mat-form-field class=" w-100 paddingLpaddingR lezem " floatLabel="always" appearance="outline">
+
+                    <input autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom"
+                        formControlName="prenom" placeholder="المكان بالتدقيق" required pattern="[a-zA-Z ]*" />
+                    <mat-error>
+                        le nom compose seulement des caractéres
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class=" title fontCairo w-30" fxLayoutAlign="center center">
+                : عنوان التجاوز
+            </div>
+
+        </div>
+        <div class="w-100" fxLayoutAlign="row" fxLayoutGap="40px" fxLayoutGap.xs="0px"
+            fxLayoutAlign="space-around center" fxLayout.xs="column-reverse">
+            <div class="w-70">
+                <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+
+                    <input autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom"
+                        formControlName="prenom" placeholder="المكان بالتدقيق" required pattern="[a-zA-Z ]*" />
+                    <mat-error>
+                        le nom compose seulement des caractéres
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class=" title fontCairo w-30" fxLayoutAlign="center center">
+                : القائم بالتجاوز
+            </div>
+
+        </div>
+        <div fxLayoutAlign="center center" class="mb50">
+
+            <div class="upload">
+
+                <div class="upload-box">
+                    <div class=" titleup fontCairo">
+                        بإمكانك إضافة صورة ، فيديو أو تسجيل صوتي
+                    </div>
+                    <div fxLayoutAlign="center center" fxLayoutGap="30px">
+
+                        <div>
+                            <mat-icon style="font-size: 40px;">
+                                backup
+                            </mat-icon>
+                        </div>
+                        <div class="edit">
+                            <button class="button primary">Select a file</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div fxLayoutAlign="center center"><button class="margin-top40 fontCairo padding1070" mat-raised-button
+                color="primary" [routerLink]="['/finishTicket']" routerLinkActive="router-link-active">إضافة
+                البلاغ</button></div>
+    </div>
+</div>
