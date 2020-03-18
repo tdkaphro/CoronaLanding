@@ -12,19 +12,28 @@ export class LandingComponent implements OnInit {
   types = [
     {
       id: 0,
-      nom: "إحتكار"
+      nom: "مغادرة الحجر الصحي",
+      description:"Description"
     },
     {
-      id: 1,
-      nom: "عدم غلق"
-    },
-    {
-      id: 2,
-      nom: "مغادرة الحجر الصحي"
+      id: 4,
+      nom: "عدم غلق",
+      description:"Description"
     },
     {
       id: 3,
-      nom: "زيادة في الأسعار"
+      nom: "خرق التعليمات",
+      description:"Description"
+    },
+    {
+      id: 1,
+      nom: "زيادة في الأسعار",
+      description:"Description"
+    },
+    {
+      id: 2,
+      nom: "إحتكار",
+      description:"Description"
     }
   ];
   Gouvernorat = [
@@ -416,7 +425,12 @@ export class LandingComponent implements OnInit {
   Tickets = [];
   selectedIndex: any;
   pageId = 0;
+  pageHistory = 0;
+  public type_id;
   public TicketForm: FormGroup;
+  public Aprovel:FormGroup;
+  public put_id:Number;
+  public confirm_id:Number;
   constructor(
     private router: Router,
     private _formBuilder: FormBuilder,
@@ -433,34 +447,32 @@ export class LandingComponent implements OnInit {
       media: ["", Validators.required],
       tel: [null],
       fullName: [""],
-      madeBy: ["", [Validators.required]]
+      madeBy: ["", [Validators.required]],
     });
+
+    this.Aprovel = this._formBuilder.group({
+      comment: [""]
+    })
   }
-  changePage() {
-    console.log("ee");
-    this.pageId++;
+
+  Confirm(id,page)
+  {
+    this.confirm_id = id;
+    this.changePage(page);
+  }
+
+  changePage(Id) {
+    this.pageHistory = this.pageId;
+    this.pageId = Id;
     if (this.pageId == 1) {
       this.mainSerivce
         .getTicketsByStateAndCity(
           this.TicketForm.get("state").value,
-          this.TicketForm.get("city").value
+          this.TicketForm.get("city").value,
+          this.type_id
         )
         .subscribe(res => {
           this.Tickets = res;
-          this.Tickets.forEach(element => {
-            if (element.type == 0) {
-              element.type = "إحتكار";
-            }
-            if (element.type == 1) {
-              element.type = "عدم غلق";
-            }
-            if (element.type == 2) {
-              element.type = "مغادرة الحجر الصحي";
-            }
-            if (element.type == 3) {
-              element.type = "زيادة في الأسعار";
-            }
-          });
         });
     }
   }
@@ -472,11 +484,71 @@ export class LandingComponent implements OnInit {
       }
     });
   }
-  addTicket() {
+
+  addComment(){
     this.mainSerivce
-      .ajouterTicket(this.TicketForm.getRawValue())
+      .ajouterAprovel({
+        "description": this.Aprovel.get('comment').value,
+        ticketId : this.confirm_id
+      })
+      .subscribe(res => {
+        this.put_id = res[0].id;
+        this.changePage(3);
+      });
+  }
+
+  addTicket()
+  {
+    this.mainSerivce
+      .ajouterTicket({
+        state: this.TicketForm.get('state').value,
+        city: this.TicketForm.get('city').value,
+        locationDescription: this.TicketForm.get('locationDescription').value,
+        description: this.TicketForm.get('description').value,
+        type: this.type_id,
+        title: this.TicketForm.get('title').value,
+        madeBy: this.TicketForm.get('madeBy').value,
+      })
+      .subscribe(res => {
+        this.put_id = res[0].id;
+        this.changePage(3);
+      });
+  }
+
+  addInfo() {
+    if(this.pageHistory == 2)
+    {
+      this.mainSerivce
+      .UpdateTicket(this.put_id,{
+        "fullName": this.TicketForm.get('fullName').value,
+        "tel":this.TicketForm.get('tel').value
+      })
       .subscribe(res => {
         location.reload();
       });
+    }
+    else{
+      console.log(this.put_id);
+      this.mainSerivce
+      .UpdateAprovel(this.put_id,{
+        "fullName": this.TicketForm.get('fullName').value,
+        "tel":this.TicketForm.get('tel').value
+      })
+      .subscribe(res => {
+        this.TicketForm.get('fullName').reset();
+        this.TicketForm.get('tel').reset();
+        this.Aprovel.reset();
+        this.changePage(1);
+      });
+    }
+  }
+
+  Tabligh(id){
+    this.type_id = id;
+    this.changePage(1);
+  }
+
+  getType(id){
+    return this.types.find(t => t.id == id).nom;
   }
 }

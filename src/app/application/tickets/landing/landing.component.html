@@ -1,451 +1,236 @@
 <form [formGroup]="TicketForm">
-  <div
-    class="imgContainer"
-    *ngIf="pageId == 0"
-    fxLayoutAlign="center center"
-    fxLayout="column"
-    style="width: 100%;"
-  >
-    <h1 class="padding0">بلغ ... باش نحميو ولادنا</h1>
-    <h1 class="padding0">و تونس أرض جدادنا</h1>
-    <div
-      class="w-60 mt-40 paddingLpaddingR"
-      fxLayoutAlign="row"
-      fxLayoutGap="20px"
-      fxLayoutGap.xs="0px"
-      fxLayoutAlign="space-around center"
-    >
-      <div class="w-50" fxLayout="row" fxLayoutGap="20px">
-        <div class="w-70">
-          <mat-form-field
-            *ngIf="selectedIndex != undefined"
-            class=" w-100 paddingLpaddingR bgblue"
-            floatLabel="always"
-            appearance="outline"
-          >
-            <mat-select formControlName="city">
-              <mat-option
-                *ngFor="let item of Gouvernorat[selectedIndex].subGouvernorat"
-                [value]="item.nom"
-              >
-                {{ item.nom }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field
-            *ngIf="selectedIndex == undefined"
-            floatLabel="always"
-            class=" w-100 paddingLpaddingR lezem"
-            appearance="outline"
-          >
-            <mat-select formControlName="city" [disabled]="true"> </mat-select>
-            <mat-error>
-              Le delegation est requis
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class=" title fontCairo w-30" fxLayoutAlign="center center">
-          : المعتمدية
-        </div>
-      </div>
+    <div class="imgContainer" *ngIf="pageId == 0" fxLayoutAlign="center center" fxLayout="column" style="width: 100%;">
+        <h1 class="padding0">بلغ ... باش نحميو ولادنا</h1>
+        <h1 class="padding0">و تونس أرض جدادنا</h1>
+        <div class="w-60 mt-40 paddingLpaddingR" fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutGap.xs="0px" fxLayoutAlign="space-around center">
+            <div class="w-50" fxLayout="row" fxLayoutGap="20px">
+                <div class="w-70">
+                    <mat-form-field *ngIf="selectedIndex != undefined" class=" w-100 paddingLpaddingR bgblue" floatLabel="always" appearance="outline">
+                        <mat-select formControlName="city">
+                            <mat-option *ngFor="let item of Gouvernorat[selectedIndex].subGouvernorat" [value]="item.nom">
+                                {{ item.nom }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="selectedIndex == undefined" floatLabel="always" class=" w-100 paddingLpaddingR lezem" appearance="outline">
+                        <mat-select formControlName="city" [disabled]="true"> </mat-select>
+                        <mat-error>
+                            Le delegation est requis
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class=" title fontCairo w-30" fxLayoutAlign="center center">
+                    : المعتمدية
+                </div>
+            </div>
 
-      <div class="w-50" fxLayout="row" fxLayoutGap="10px">
-        <div class="w-70">
-          <mat-form-field
-            class=" w-100 paddingLpaddingR bgblue   "
-            floatLabel="always"
-            appearance="outline"
-          >
-            <mat-select
-              formControlName="state"
-              (valueChange)="gouvernoratChange($event)"
-            >
-              <mat-option *ngFor="let item of Gouvernorat" [value]="item.nom">
-                {{ item.nom }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+            <div class="w-50" fxLayout="row" fxLayoutGap="10px">
+                <div class="w-70">
+                    <mat-form-field class=" w-100 paddingLpaddingR bgblue   " floatLabel="always" appearance="outline">
+                        <mat-select formControlName="state" (valueChange)="gouvernoratChange($event)">
+                            <mat-option *ngFor="let item of Gouvernorat" [value]="item.nom">
+                                {{ item.nom }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class=" title fontCairo w-30" fxLayoutAlign="center center">
+                    : الولاية
+                </div>
+            </div>
         </div>
-        <div class=" title fontCairo w-30" fxLayoutAlign="center center">
-          : الولاية
-        </div>
-      </div>
-    </div>
-    <button
-      class="margin-top40 fontCairo padding1070"
-      mat-raised-button
-      color="primary"
-      (click)="changePage()"
-      [disabled]="
+        <button class="margin-top40 fontCairo padding1070" mat-raised-button color="primary" (click)="changePage(6)" [disabled]="
         this.TicketForm.get('state').value == '' ||
         this.TicketForm.get('city').value == ''
-      "
-    >
+      ">
       بلغ
     </button>
-  </div>
-  <div
-    *ngIf="pageId == 1"
-    class="div"
-    fxLayoutGap="45px"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    class="margin-top45"
-  >
-    <div
-      class="fontCairo title "
-      fxLayoutAlign="center center"
-      *ngIf="Tickets.length == 0"
-    >
-      لا يوجد أي بلاغ في هذا المكان
     </div>
-    <div
-      class="container"
-      *ngFor="let ticket of Tickets"
-      style="padding: 25px !important;"
-      ngClass.xs="containerxs"
-    >
-      <div fxLayoutAlign="space-between center">
-        <div class="fontCairo title">{{ ticket.type }}</div>
-        <div class="fontCairo title">{{ ticket.title }}</div>
-      </div>
-      <div class="fontCairo text-right ">
-        {{ ticket.description }}
-      </div>
-      <div class="fontCairo text-right fw600">
-        {{ ticket.city }} , {{ ticket.state }}
-      </div>
-      <div fxLayoutAlign="space-between center">
-        <div class="fontCairo votes fw600">11 تأييد</div>
-        <div class="fontCairo title">
-          <button
-            class=" fontCairo"
-            mat-raised-button
-            color="primary"
-            [routerLink]="['/tickets']"
-            routerLinkActive="router-link-active"
-          >
+    <div *ngIf="pageId == 1" class="div" fxLayoutGap="45px" fxLayout="column" fxLayoutAlign="center center" class="margin-top45">
+        <div class="fontCairo title " fxLayoutAlign="center center" *ngIf="Tickets.length == 0">
+            لا يوجد أي بلاغ في هذا المكان
+        </div>
+        <div class="container" *ngFor="let ticket of Tickets" style="padding: 25px !important;" ngClass.xs="containerxs">
+            <div fxLayoutAlign="space-between center">
+                <div class="fontCairo title">{{ getType(ticket.type) }}</div>
+                <div class="fontCairo title">{{ ticket.title }}</div>
+            </div>
+            <div class="fontCairo text-right ">
+                {{ ticket.description }}
+            </div>
+            <div class="fontCairo text-right fw600">
+                {{ ticket.city }} , {{ ticket.state }}
+            </div>
+            <div fxLayoutAlign="space-between center">
+                <div class="fontCairo votes fw600">{{ ticket.count }} تأييد</div>
+                <div class="fontCairo title">
+                    <button class=" fontCairo" mat-raised-button color="primary" (click)="Confirm( ticket.id  , 4)" routerLinkActive="router-link-active">
             أكد
           </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div fxLayoutAlign="center center">
-      <button
-        class="margin-top40 fontCairo padding1070"
-        mat-raised-button
-        color="primary"
-        (click)="pageId = pageId + 1"
-      >
+        <div fxLayoutAlign="center center">
+            <button class="margin-top40 fontCairo padding1070" mat-raised-button color="primary" (click)="changePage(2)">
         بلغ
       </button>
+        </div>
     </div>
-  </div>
-  <div
-    *ngIf="pageId == 2"
-    class="div"
-    fxLayoutGap="45px"
-    fxLayout="column"
-    class="padding-top45  bgGrey"
-    fxLayoutAlign="center center"
-    style="height: 100vh;"
-  >
-    <div
-      class="container"
-      style="padding: 25px ;"
-      fxLayoutGap="40px"
-      fxLayoutGap.xs="10px"
-      fxLayout="column"
-    >
-      <div
-        class="w-100  mt-40 "
-        fxLayoutAlign="row"
-        fxLayoutGap="20px"
-        fxLayoutGap.xs="0px"
-        fxLayoutAlign="space-around center"
-      >
-        <div class="w-70">
-          <mat-form-field
-            class=" w-100 paddingLpaddingR lezem"
-            floatLabel="always"
-            appearance="outline"
-          >
-            <input
-              autocomplete="off"
-              class="inputrtl fontCairoInput"
-              matInput
-              formControlName="locationDescription"
-              style="text-align: right; direction:RTL"
-              placeholder="المكان بالتدقيق
-                    "
-              required
-            />
-          </mat-form-field>
-        </div>
-        <div class=" title fontCairo w-30" fxLayoutAlign="center center">
-          : المكان بالتدقيق
-        </div>
-      </div>
+    <div *ngIf="pageId == 2" class="div" fxLayoutGap="45px" fxLayout="column" class="padding-top45  bgGrey" fxLayoutAlign="center center" style="height: 100vh;">
+        <div class="container" style="padding: 25px ;" fxLayoutGap="40px" fxLayoutGap.xs="10px" fxLayout="column">
+            <div class="w-100  mt-40 " fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutGap.xs="0px" fxLayoutAlign="space-around center">
+                <div class="w-70">
+                    <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+                        <input autocomplete="off" class="inputrtl fontCairoInput" matInput formControlName="locationDescription" style="text-align: right; direction:RTL" placeholder="المكان بالتدقيق
+                    " required />
+                    </mat-form-field>
+                </div>
+                <div class=" title fontCairo w-30" fxLayoutAlign="center center">
+                    : المكان بالتدقيق
+                </div>
+            </div>
 
-      <div
-        class="w-100"
-        fxLayoutAlign="row"
-        fxLayoutGap="40px"
-        fxLayoutGap.xs="0px"
-        fxLayoutAlign="space-around center"
-        fxLayout.xs="column-reverse"
-      >
-        <div class="w-70">
-          <mat-form-field
-            class=" w-100 paddingLpaddingR lezem "
-            floatLabel="always"
-            appearance="outline"
-          >
-            <input
-              autocomplete="off"
-              class="inputrtl fontCairoInput"
-              matInput
-              name="prenom"
-              formControlName="title"
-              style="text-align: right; direction:RTL"
-              placeholder="عنوان التجاوز "
-              required
-            />
-          </mat-form-field>
-        </div>
-        <div class=" title fontCairo w-30" fxLayoutAlign="center center">
-          : عنوان التجاوز
-        </div>
-      </div>
-      <div
-        class="w-100"
-        fxLayoutAlign="row"
-        fxLayoutGap="40px"
-        fxLayoutGap.xs="0px"
-        fxLayoutAlign="space-around center"
-        fxLayout.xs="column-reverse"
-      >
-        <div class="w-70">
-          <mat-form-field
-            class=" w-100 paddingLpaddingR lezem "
-            floatLabel="always"
-            appearance="outline"
-          >
-            <mat-select
-              formControlName="type"
-              style="text-align: right; direction:RTL"
-              placeholder=" نوع التجاوز"
-            >
-              <mat-option *ngFor="let type of types" [value]="type.id">
-                {{ type.nom }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class=" title fontCairo w-30" fxLayoutAlign="center center">
-          : نوع التجاوز
-        </div>
-      </div>
-      <div
-        class="w-100"
-        fxLayoutAlign="row"
-        fxLayoutGap="40px"
-        fxLayoutGap.xs="0px"
-        fxLayoutAlign="space-around center"
-        fxLayout.xs="column-reverse"
-      >
-        <div class="w-70">
-          <mat-form-field
-            class=" w-100 paddingLpaddingR lezem"
-            floatLabel="always"
-            appearance="outline"
-          >
-            <input
-              autocomplete="off"
-              class="inputrtl fontCairoInput"
-              matInput
-              name="prenom"
-              formControlName="madeBy"
-              style="text-align: right; direction:RTL"
-              placeholder=" القائم بالتجاوز"
-              required
-            />
-          </mat-form-field>
-        </div>
-        <div class=" title fontCairo w-30" fxLayoutAlign="center center">
-          : القائم بالتجاوز
-        </div>
-      </div>
-      <div
-        class="w-100"
-        fxLayoutAlign="row"
-        fxLayoutGap="40px"
-        fxLayoutGap.xs="0px"
-        fxLayoutAlign="space-around center"
-        fxLayout.xs="column-reverse"
-      >
-        <div class="w-70">
-          <mat-form-field
-            class=" w-100 paddingLpaddingR lezem"
-            floatLabel="always"
-            appearance="outline"
-          >
-            <textarea
-              autocomplete="off"
-              class="inputrtl fontCairoInput"
-              matInput
-              name="prenom"
-              formControlName="description"
-              style="text-align: right; direction:RTL"
-              placeholder=" وصف التجاوز"
-              required
-            ></textarea>
-          </mat-form-field>
-        </div>
-        <div class=" title fontCairo w-30" fxLayoutAlign="center center">
-          : وصف التجاوز
-        </div>
-      </div>
-      <div fxLayoutAlign="center center" class="mb50">
-        <div class="upload">
-          <div class="upload-box">
-            <div class=" titleup fontCairo">
-              بإمكانك إضافة صورة ، فيديو أو تسجيل صوتي
+            <div class="w-100" fxLayoutAlign="row" fxLayoutGap="40px" fxLayoutGap.xs="0px" fxLayoutAlign="space-around center" fxLayout.xs="column-reverse">
+                <div class="w-70">
+                    <mat-form-field class=" w-100 paddingLpaddingR lezem " floatLabel="always" appearance="outline">
+                        <input autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom" formControlName="title" style="text-align: right; direction:RTL" placeholder="تلخيص التجاوز " required />
+                    </mat-form-field>
+                </div>
+                <div class=" title fontCairo w-30" fxLayoutAlign="center center">
+                    : تلخيص التجاوز
+                </div>
             </div>
-            <div fxLayoutAlign="center center" fxLayoutGap="30px">
-              <div>
-                <mat-icon style="font-size: 40px;">
-                  backup
-                </mat-icon>
-              </div>
-              <div class="edit">
-                <button class="button primary">Select a file</button>
-              </div>
+            <div class="w-100" fxLayoutAlign="row" fxLayoutGap="40px" fxLayoutGap.xs="0px" fxLayoutAlign="space-around center" fxLayout.xs="column-reverse">
+                <div class="w-70">
+                    <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+                        <input autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom" formControlName="madeBy" style="text-align: right; direction:RTL" placeholder=" القائم بالتجاوز" required />
+                    </mat-form-field>
+                </div>
+                <div class=" title fontCairo w-30" fxLayoutAlign="center center">
+                    : القائم بالتجاوز
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div fxLayoutAlign="center center">
-        <button
-          class="margin-top40 fontCairo padding1070"
-          mat-raised-button
-          color="primary"
-          (click)="pageId = pageId + 1"
-        >
+            <div class="w-100" fxLayoutAlign="row" fxLayoutGap="40px" fxLayoutGap.xs="0px" fxLayoutAlign="space-around center" fxLayout.xs="column-reverse">
+                <div class="w-70">
+                    <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+                        <textarea autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom" formControlName="description" style="text-align: right; direction:RTL" placeholder=" وصف التجاوز" required></textarea>
+                    </mat-form-field>
+                </div>
+                <div class=" title fontCairo w-30" fxLayoutAlign="center center">
+                    : وصف التجاوز
+                </div>
+            </div>
+            <div fxLayoutAlign="center center" class="mb50">
+                <div class="upload">
+                    <div class="upload-box">
+                        <div class=" titleup fontCairo">
+                            بإمكانك إضافة صورة ، فيديو أو تسجيل صوتي
+                        </div>
+                        <div fxLayoutAlign="center center" fxLayoutGap="30px">
+                            <div>
+                                <mat-icon style="font-size: 40px;">
+                                    backup
+                                </mat-icon>
+                            </div>
+                            <div class="edit">
+                                <button class="button primary">Select a file</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div fxLayoutAlign="center center">
+                <button class="margin-top40 fontCairo padding1070" mat-raised-button color="primary" (click)="addTicket()">
           إضافة البلاغ
         </button>
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div
-    *ngIf="pageId == 3"
-    fxLayoutGap="45px"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    class="margin-top45 bgGrey"
-    style="height: 100vh;"
-  >
-    <div
-      class=" container"
-      style="padding: 25px ;"
-      fxLayoutGap="40px"
-      fxLayoutGap.xs="10px"
-      fxLayout="column"
-    >
-      <div
-        class="title fontCairo paddingLpaddingR  mt-40 mb-20"
-        style="text-align: center;"
-        fxLayoutAlign="center center"
-      >
-        في البداية نحبو نشكروك على التبليغ و مساهمتك في مساعدة بلادنا
-      </div>
-      <div class=" mb-20 " fxLayoutAlign="center center">
-        <img src="assets/tunisia.png" />
-      </div>
+    <div *ngIf="pageId == 3" fxLayoutGap="45px" fxLayout="column" fxLayoutAlign="center center" class="margin-top45 bgGrey" style="height: 100vh;">
+        <div class=" container" style="padding: 25px ;" fxLayoutGap="40px" fxLayoutGap.xs="10px" fxLayout="column">
+            <div class="title fontCairo paddingLpaddingR  mt-40 mb-20" style="text-align: center;" fxLayoutAlign="center center">
+                في البداية نحبو نشكروك على التبليغ و مساهمتك في مساعدة بلادنا
+            </div>
+            <div class=" mb-20 " fxLayoutAlign="center center">
+                <img src="assets/tunisia.png" />
+            </div>
 
-      <div
-        class="title fontCairo paddingLpaddingR   mb-20"
-        style="text-align: center;"
-        fxLayoutAlign="center center"
-      >
-        كان تحب تزيد تعاونا خليلنا معطياتك و تنجم متحطش كل شيئ تأكد إنو معلوماتك
-        بش تكون محفوظة بكل سرية
-      </div>
-      <div
-        class="w-100"
-        fxLayoutAlign="row"
-        fxLayoutGap="20px"
-        fxLayoutAlign="space-around center"
-      >
-        <div class="w-70">
-          <mat-form-field
-            class=" w-100 paddingLpaddingR lezem"
-            floatLabel="always"
-            appearance="outline"
-          >
-            <input
-              autocomplete="off"
-              style="direction:RTL ;text-align: right  "
-              matInput
-              name="prenom"
-              formControlName="fullName"
-              placeholder="الإسم و اللقب
-                    "
-            />
-          </mat-form-field>
-        </div>
-        <div
-          class=" title fontCairo w-30"
-          ngClass.xs="titlexs"
-          fxLayoutAlign="center center"
-        >
-          : الإسم و اللقب
-        </div>
-      </div>
-      <div
-        class="w-100"
-        fxLayoutAlign="row"
-        fxLayoutGap="20px"
-        fxLayoutAlign="space-around center"
-      >
-        <div class="w-70">
-          <mat-form-field
-            class=" w-100 paddingLpaddingR lezem"
-            floatLabel="always"
-            appearance="outline"
-          >
-            <input
-              autocomplete="off"
-              style="text-align: right; direction:RTL"
-              matInput
-              name="prenom"
-              formControlName="tel"
-              placeholder="رقم الهاتف
-                    "
-            />
-          </mat-form-field>
-        </div>
-        <div
-          class=" title fontCairo w-30"
-          ngClass.xs="titlexs"
-          fxLayoutAlign="center center"
-        >
-          : رقم الهاتف
-        </div>
-      </div>
+            <div class="title fontCairo paddingLpaddingR   mb-20" style="text-align: center;" fxLayoutAlign="center center">
+                كان تحب تزيد تعاونا خليلنا معطياتك و تنجم متحطش كل شيئ تأكد إنو معلوماتك بش تكون محفوظة بكل سرية
+            </div>
+            <div class="w-100" fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+                <div class="w-70">
+                    <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+                        <input autocomplete="off" style="direction:RTL ;text-align: right  " matInput name="prenom" formControlName="fullName" placeholder="الإسم و اللقب
+                    " />
+                    </mat-form-field>
+                </div>
+                <div class=" title fontCairo w-30" ngClass.xs="titlexs" fxLayoutAlign="center center">
+                    : الإسم و اللقب
+                </div>
+            </div>
+            <div class="w-100" fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+                <div class="w-70">
+                    <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+                        <input autocomplete="off" style="text-align: right; direction:RTL" matInput name="prenom" formControlName="tel" placeholder="رقم الهاتف
+                    " />
+                    </mat-form-field>
+                </div>
+                <div class=" title fontCairo w-30" ngClass.xs="titlexs" fxLayoutAlign="center center">
+                    : رقم الهاتف
+                </div>
+            </div>
 
-      <div fxLayoutAlign="center center">
-        <button
-          class="mb-40 fontCairo padding1070"
-          mat-raised-button
-          color="primary"
-          (click)="addTicket()"
-          routerLinkActive="router-link-active"
-        >
+            <div fxLayoutAlign="center center">
+                <button class="mb-40 fontCairo padding1070" mat-raised-button color="primary" (click)="addInfo()" routerLinkActive="router-link-active">
           إضافة
         </button>
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 </form>
+
+<form [formGroup]="Aprovel">
+    <div *ngIf="pageId == 4" fxLayoutGap="45px" fxLayout="column" fxLayoutAlign="center center" class="margin-top45 bgGrey" style="height: 100vh;">
+        <div class=" container" style="padding: 25px ;" fxLayoutGap="40px" fxLayoutGap.xs="10px" fxLayout="column">
+            <div class="title fontCairo paddingLpaddingR  mt-40 mb-20" style="text-align: center;" fxLayoutAlign="center center">
+                نشكروك على تاكيد صحة المعلومة
+            </div>
+            <div class=" mb-20 " fxLayoutAlign="center center">
+                <img src="assets/tunisia.png" />
+            </div>
+
+            <div class="w-100" fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+                <div class="w-70">
+                    <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+                        <textarea autocomplete="off" style="text-align: right; direction:RTL" matInput name="comment" formControlName="comment" placeholder="اكتب هنا...
+                  "></textarea>
+                    </mat-form-field>
+                </div>
+                <div class=" title fontCairo w-30" ngClass.xs="titlexs" fxLayoutAlign="center center">
+                    : تعليق
+                </div>
+            </div>
+
+            <div fxLayoutAlign="center center">
+                <button class="mb-40 fontCairo padding1070" mat-raised-button color="primary" (click)="addComment()" routerLinkActive="router-link-active">
+                أكد
+      </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div *ngIf="pageId == 6" fxLayout="column" fxLayoutAlign="center center" class="margin-top45 bgGrey" style="height: 100vh;">
+    <div style="border:1px solid #5560C2; border-radius: 4px;max-width: 800px;width: 80%;">
+        <mat-list style="width: 100%;">
+            <mat-list-item *ngFor="let type of types" style="margin:10px;">
+                <button mat-raised-button style="width:calc(100% - 20px);cursor: pointer;" (click)="Tabligh(type.id)">
+                <div mat-line>{{type.nom}}</div>
+                <div mat-line> {{type.description}} </div>
+              </button>
+            </mat-list-item>
+        </mat-list>
+    </div>
+</div>
