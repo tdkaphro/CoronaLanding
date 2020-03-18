@@ -548,7 +548,34 @@ export class LandingComponent implements OnInit {
     this.changePage(1);
   }
 
-  getType(id){
+  getType(id:number){
     return this.types.find(t => t.id == id).nom;
+  }
+
+  backPage()
+  {
+    switch(this.pageId){
+      case 6: 
+      this.changePage(0);
+      this.TicketForm.reset();
+      break;
+      case 1: 
+      this.changePage(6);
+      this.resetTicketsForm();
+      break;
+      default: 
+      this.changePage(1);
+      this.resetTicketsForm();
+      break;
+    }
+  }
+
+  resetTicketsForm(){
+    Object.keys(this.TicketForm.controls).forEach(key => {
+      if (!(key === "state" || key === "city")) {
+        this.TicketForm.get(key).reset();
+      }
+   });
+   this.Aprovel.reset();
   }
 }
