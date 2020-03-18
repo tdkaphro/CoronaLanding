@@ -15,7 +15,7 @@ import { AddInformationsComponent } from './application/tickets/add-informations
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,8 @@ import {MatListModule} from '@angular/material/list';
     AddInformationsComponent,
   ],
   imports: [
+    MatButtonModule,
+    MatInputModule,
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
     MatSelectModule,

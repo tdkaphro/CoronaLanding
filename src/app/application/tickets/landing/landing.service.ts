@@ -33,6 +33,9 @@ export class LandingService {
   UpdateTicket(id, data) {
     return this.http.put<any>(`${this.uri}/ticket/${id}`, data);
   }
+  downloadMedia() {
+    return this.http.get<any>(`${this.uri}/video-1584485935722.mp4`);
+  }
 
   getConfirmCount(id) {
     let confirm = 0;

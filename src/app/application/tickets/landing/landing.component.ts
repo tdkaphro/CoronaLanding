@@ -455,6 +455,9 @@ export class LandingComponent implements OnInit {
     this.Aprovel = this._formBuilder.group({
       comment: [""]
     })
+    this.mainSerivce.downloadMedia().subscribe((res) => {
+      console.log(res, "aa")
+    })
   }
 
   Confirm(id, page) {
