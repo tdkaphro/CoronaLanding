@@ -414,6 +414,8 @@ export class LandingComponent implements OnInit {
     }
   ];
   Tickets = [];
+  fileToUpload: File = null;
+
   selectedIndex: any;
   pageId = 0;
   public TicketForm: FormGroup;
@@ -421,7 +423,7 @@ export class LandingComponent implements OnInit {
     private router: Router,
     private _formBuilder: FormBuilder,
     private mainSerivce: LandingService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.TicketForm = this._formBuilder.group({
       state: ["", Validators.required],
@@ -473,10 +475,23 @@ export class LandingComponent implements OnInit {
     });
   }
   addTicket() {
-    this.mainSerivce
-      .ajouterTicket(this.TicketForm.getRawValue())
-      .subscribe(res => {
-        location.reload();
-      });
+    console.log(this.fileToUpload)
+    this.mainSerivce.postFile(this.fileToUpload).subscribe(data => {
+      console.log(data)
+    }, error => {
+      console.log(error);
+      this.mainSerivce
+        .ajouterTicket(this.TicketForm.getRawValue())
+        .subscribe(res => {
+/*           location.reload();
+ */        });
+    });
+  }
+  onFileChanged(files) {
+    console.log(files)
+    this.fileToUpload = files.target.files[0];
+  }
+  upvotePage() {
+    this.pageId = 4;
   }
 }
