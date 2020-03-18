@@ -1,3 +1,8 @@
+<div *ngIf="pageId != 0" style="position: fixed;top: 20px;left: 20px;">
+    <button mat-raised-button (click)="backPage()" style="background-color: #3f51b5;color: white;">
+        <mat-icon>arrow_back_ios</mat-icon> رجوع
+    </button>
+</div>
 <form [formGroup]="TicketForm">
     <div class="imgContainer" *ngIf="pageId == 0" fxLayoutAlign="center center" fxLayout="column" style="width: 100%;">
         <h1 class="padding0">بلغ ... باش نحميو ولادنا</h1>
@@ -43,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <button class="margin-top40 fontCairo padding1070" mat-raised-button color="primary" (click)="changePage()"
+        <button class="margin-top40 fontCairo padding1070" mat-raised-button color="primary" (click)="changePage(6)"
             [disabled]="
         this.TicketForm.get('state').value == '' ||
         this.TicketForm.get('city').value == ''
@@ -59,7 +64,7 @@
         <div class="container" *ngFor="let ticket of Tickets" style="padding: 25px !important;"
             ngClass.xs="containerxs">
             <div fxLayoutAlign="space-between center">
-                <div class="fontCairo title">{{ ticket.type }}</div>
+                <div class="fontCairo title">{{ getType(ticket.type) }}</div>
                 <div class="fontCairo title">{{ ticket.title }}</div>
             </div>
             <div class="fontCairo text-right ">
@@ -69,9 +74,9 @@
                 {{ ticket.city }} , {{ ticket.state }}
             </div>
             <div fxLayoutAlign="space-between center">
-                <div class="fontCairo votes fw600">11 تأييد</div>
+                <div class="fontCairo votes fw600">{{ ticket.count }} تأييد</div>
                 <div class="fontCairo title">
-                    <button class=" fontCairo" mat-raised-button color="primary" (click)="upvotePage()"
+                    <button class=" fontCairo" mat-raised-button color="primary" (click)="Confirm( ticket.id  , 4)"
                         routerLinkActive="router-link-active">
                         أكد
                     </button>
@@ -81,7 +86,7 @@
 
         <div fxLayoutAlign="center center">
             <button class="margin-top40 fontCairo padding1070" mat-raised-button color="primary"
-                (click)="pageId = pageId + 1">
+                (click)="changePage(2)">
                 بلغ
             </button>
         </div>
@@ -109,27 +114,11 @@
                     <mat-form-field class=" w-100 paddingLpaddingR lezem " floatLabel="always" appearance="outline">
                         <input autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom"
                             formControlName="title" style="text-align: right; direction:RTL"
-                            placeholder="عنوان التجاوز " required />
+                            placeholder="تلخيص التجاوز " required />
                     </mat-form-field>
                 </div>
                 <div class=" title fontCairo w-30" fxLayoutAlign="center center">
-                    : عنوان التجاوز
-                </div>
-            </div>
-            <div class="w-100" fxLayoutAlign="row" fxLayoutGap="40px" fxLayoutGap.xs="0px"
-                fxLayoutAlign="space-around center" fxLayout.xs="column-reverse">
-                <div class="w-70">
-                    <mat-form-field class=" w-100 paddingLpaddingR lezem " floatLabel="always" appearance="outline">
-                        <mat-select formControlName="type" style="text-align: right; direction:RTL"
-                            placeholder=" نوع التجاوز">
-                            <mat-option *ngFor="let type of types" [value]="type.id">
-                                {{ type.nom }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class=" title fontCairo w-30" fxLayoutAlign="center center">
-                    : نوع التجاوز
+                    : تلخيص التجاوز
                 </div>
             </div>
             <div class="w-100" fxLayoutAlign="row" fxLayoutGap="40px" fxLayoutGap.xs="0px"
@@ -201,8 +190,7 @@
 
             <div class="title fontCairo paddingLpaddingR   mb-20" style="text-align: center;"
                 fxLayoutAlign="center center">
-                كان تحب تزيد تعاونا خليلنا معطياتك و تنجم متحطش كل شيئ تأكد إنو معلوماتك
-                بش تكون محفوظة بكل سرية
+                كان تحب تزيد تعاونا خليلنا معطياتك و تنجم متحطش كل شيئ تأكد إنو معلوماتك بش تكون محفوظة بكل سرية
             </div>
             <div class="w-100" fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
                 <div class="w-70">
@@ -228,8 +216,9 @@
                     : رقم الهاتف
                 </div>
             </div>
+
             <div fxLayoutAlign="center center">
-                <button class="mb-40 fontCairo padding1070" mat-raised-button color="primary" (click)="addTicket()"
+                <button class="mb-40 fontCairo padding1070" mat-raised-button color="primary" (click)="addInfo()"
                     routerLinkActive="router-link-active">
                     إضافة
                 </button>
@@ -237,28 +226,52 @@
         </div>
     </div>
 </form>
-<div *ngIf="pageId == 4" class="div" fxLayoutGap="45px" fxLayout="column" class="padding-top45  bgGrey"
-    fxLayoutAlign="center center" style="height: 100vh;">
-    <div class="container" style="padding: 25px ;" fxLayoutGap="40px" fxLayoutGap.xs="10px" fxLayout="column">
-        <div class="w-100" fxLayoutAlign="row" fxLayoutGap="40px" fxLayoutGap.xs="0px"
-            fxLayoutAlign="space-around center" fxLayout.xs="column-reverse">
-            <div class="w-70">
-                <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
-                    <textarea autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom"
-                        formControlName="description" style="text-align: right; direction:RTL"
-                        placeholder=" وصف التجاوز" required></textarea>
-                </mat-form-field>
-            </div>
-            <div class=" title fontCairo w-30" fxLayoutAlign="center center">
-                : وصف التجاوز
-            </div>
-        </div>
 
-        <div fxLayoutAlign="center center">
-            <button class="margin-top40 fontCairo padding1070" mat-raised-button color="primary"
-                (click)="pageId = pageId + 1">
-                إضافة البلاغ
-            </button>
+<form [formGroup]="Aprovel">
+    <div *ngIf="pageId == 4" fxLayoutGap="45px" fxLayout="column" fxLayoutAlign="center center"
+        class="margin-top45 bgGrey" style="height: 100vh;">
+        <div class=" container" style="padding: 25px ;" fxLayoutGap="40px" fxLayoutGap.xs="10px" fxLayout="column">
+            <div class="title fontCairo paddingLpaddingR  mt-40 mb-20" style="text-align: center;"
+                fxLayoutAlign="center center">
+                نشكروك على تاكيد صحة المعلومة
+            </div>
+            <div class=" mb-20 " fxLayoutAlign="center center">
+                <img src="assets/tunisia.png" />
+            </div>
+
+            <div class="w-100" fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+                <div class="w-70">
+                    <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
+                        <textarea autocomplete="off" style="text-align: right; direction:RTL" matInput name="comment"
+                            formControlName="comment" placeholder="اكتب هنا...
+                  "></textarea>
+                    </mat-form-field>
+                </div>
+                <div class=" title fontCairo w-30" ngClass.xs="titlexs" fxLayoutAlign="center center">
+                    : تعليق
+                </div>
+            </div>
+
+            <div fxLayoutAlign="center center">
+                <button class="mb-40 fontCairo padding1070" mat-raised-button color="primary" (click)="addComment()"
+                    routerLinkActive="router-link-active">
+                    أكد
+                </button>
+            </div>
         </div>
+    </div>
+</form>
+
+<div *ngIf="pageId == 6" fxLayout="column" fxLayoutAlign="center center" class="margin-top45 bgGrey"
+    style="height: 100vh;">
+    <div style="border:1px solid #5560C2; border-radius: 4px;max-width: 800px;width: 80%;">
+        <mat-list style="width: 100%;">
+            <mat-list-item *ngFor="let type of types" style="margin:10px;">
+                <button mat-raised-button style="width:calc(100% - 20px);cursor: pointer;" (click)="Tabligh(type.id)">
+                    <div mat-line>{{type.nom}}</div>
+                    <div mat-line> {{type.description}} </div>
+                </button>
+            </mat-list-item>
+        </mat-list>
     </div>
 </div>
