@@ -437,11 +437,15 @@ export class LandingComponent implements OnInit {
     private router: Router,
     private _formBuilder: FormBuilder,
     private mainSerivce: LandingService
-  ) { }
+  ) {}
+  onFileChanged(files) {
+    console.log(files);
+    this.fileToUpload = files.target.files[0];
+  }
   ngOnInit(): void {
     this.TicketForm = this._formBuilder.group({
-      state: ["", Validators.required],
-      city: ["", Validators.required],
+      state: [null, Validators.required],
+      city: [null, Validators.required],
       locationDescription: ["", Validators.required],
       description: ["", Validators.required],
       type: [null, Validators.required],
@@ -449,15 +453,12 @@ export class LandingComponent implements OnInit {
       media: ["", Validators.required],
       tel: [null],
       fullName: [""],
-      madeBy: ["", [Validators.required]],
+      madeBy: ["", [Validators.required]]
     });
 
     this.Aprovel = this._formBuilder.group({
       comment: [""]
-    })
-    this.mainSerivce.downloadMedia().subscribe((res) => {
-      console.log(res, "aa")
-    })
+    });
   }
 
   Confirm(id, page) {
@@ -468,6 +469,7 @@ export class LandingComponent implements OnInit {
   changePage(Id) {
     this.pageHistory = this.pageId;
     this.pageId = Id;
+
     if (this.pageId == 1) {
       this.mainSerivce
         .getTicketsByStateAndCity(
@@ -477,6 +479,9 @@ export class LandingComponent implements OnInit {
         )
         .subscribe(res => {
           this.Tickets = res;
+          if (this.pageId == 1 && this.Tickets.length == 0) {
+            this.pageId++;
+          }
         });
     }
   }
@@ -492,7 +497,7 @@ export class LandingComponent implements OnInit {
   addComment() {
     this.mainSerivce
       .ajouterAprovel({
-        "description": this.Aprovel.get('comment').value,
+        description: this.Aprovel.get("comment").value,
         ticketId: this.confirm_id
       })
       .subscribe(res => {
@@ -502,43 +507,65 @@ export class LandingComponent implements OnInit {
   }
 
   addTicket() {
-    this.mainSerivce
-      .ajouterTicket({
-        state: this.TicketForm.get('state').value,
-        city: this.TicketForm.get('city').value,
-        locationDescription: this.TicketForm.get('locationDescription').value,
-        description: this.TicketForm.get('description').value,
-        type: this.type_id,
-        title: this.TicketForm.get('title').value,
-        madeBy: this.TicketForm.get('madeBy').value,
-      })
-      .subscribe(res => {
-        this.put_id = res[0].id;
-        this.changePage(3);
+    console.log("upload file");
+    if (this.fileToUpload != null) {
+      this.mainSerivce.postFile(this.fileToUpload).subscribe(data => {
+        this.TicketForm.get("media").setValue(data.fileUrl.substr(12));
+        this.mainSerivce
+          .ajouterTicket({
+            state: this.TicketForm.get("state").value,
+            city: this.TicketForm.get("city").value,
+            locationDescription: this.TicketForm.get("locationDescription")
+              .value,
+            description: this.TicketForm.get("description").value,
+            type: this.type_id,
+            title: this.TicketForm.get("title").value,
+            madeBy: this.TicketForm.get("madeBy").value,
+            media: this.TicketForm.get("media").value
+          })
+          .subscribe(res => {
+            this.put_id = res[0].id;
+            this.changePage(3);
+          });
       });
+    } else {
+      this.mainSerivce
+        .ajouterTicket({
+          state: this.TicketForm.get("state").value,
+          city: this.TicketForm.get("city").value,
+          locationDescription: this.TicketForm.get("locationDescription").value,
+          description: this.TicketForm.get("description").value,
+          type: this.type_id,
+          title: this.TicketForm.get("title").value,
+          madeBy: this.TicketForm.get("madeBy").value
+        })
+        .subscribe(res => {
+          this.put_id = res[0].id;
+          this.changePage(3);
+        });
+    }
   }
 
   addInfo() {
     if (this.pageHistory == 2) {
       this.mainSerivce
         .UpdateTicket(this.put_id, {
-          "fullName": this.TicketForm.get('fullName').value,
-          "tel": this.TicketForm.get('tel').value
+          fullName: this.TicketForm.get("fullName").value,
+          tel: this.TicketForm.get("tel").value
         })
         .subscribe(res => {
           location.reload();
         });
-    }
-    else {
+    } else {
       console.log(this.put_id);
       this.mainSerivce
         .UpdateAprovel(this.put_id, {
-          "fullName": this.TicketForm.get('fullName').value,
-          "tel": this.TicketForm.get('tel').value
+          fullName: this.TicketForm.get("fullName").value,
+          tel: this.TicketForm.get("tel").value
         })
         .subscribe(res => {
-          this.TicketForm.get('fullName').reset();
-          this.TicketForm.get('tel').reset();
+          this.TicketForm.get("fullName").reset();
+          this.TicketForm.get("tel").reset();
           this.Aprovel.reset();
           this.changePage(1);
         });
@@ -553,20 +580,22 @@ export class LandingComponent implements OnInit {
   getType(id: number) {
     return this.types.find(t => t.id == id).nom;
   }
-
   backPage() {
     switch (this.pageId) {
       case 6:
         this.changePage(0);
         this.TicketForm.reset();
+        console.log("zae", this.TicketForm);
         break;
       case 1:
         this.changePage(6);
         this.resetTicketsForm();
+
         break;
       default:
-        this.changePage(1);
+        this.changePage(6);
         this.resetTicketsForm();
+
         break;
     }
   }

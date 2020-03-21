@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class LandingService {
-  uri = "http://localhost:3000/api/ticket";
-  constructor(private http: HttpClient) { }
+  uri = "http://localhost:3000/api/ticket"; // "/api/ticket";
+  constructor(private http: HttpClient) {}
   getTicketsByStateAndCity(state, city, type) {
     let params = new HttpParams();
     params = params.append("state", state);
@@ -33,15 +33,25 @@ export class LandingService {
   UpdateTicket(id, data) {
     return this.http.put<any>(`${this.uri}/ticket/${id}`, data);
   }
-  downloadMedia() {
-    return this.http.get<any>(`${this.uri}/video-1584485935722.mp4`);
+
+  downloadMedia(fileName) {
+    this.http;
+    return this.http.get(`${this.uri}/download/${fileName}`, {
+      responseType: "arraybuffer"
+    });
   }
 
+  postFile(fileToUpload: File) {
+    const formData: FormData = new FormData();
+    formData.append("file", fileToUpload, fileToUpload.name);
+
+    return this.http.post<any>(`${this.uri}/upload`, formData);
+  }
   getConfirmCount(id) {
     let confirm = 0;
-    this.http.get<any>(`${this.uri}/aprovel_count/${id}`).subscribe((res) => {
+    this.http.get<any>(`${this.uri}/aprovel_count/${id}`).subscribe(res => {
       confirm = res[0];
-    })
+    });
     return confirm;
   }
 }
