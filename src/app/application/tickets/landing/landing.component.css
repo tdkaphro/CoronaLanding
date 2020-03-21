@@ -2,13 +2,10 @@
   height: 100vh;
 
   display: flex;
-
-
-
 }
 
 .imgContainer::after {
-  background: url('/assets/background.jpg');
+  background: url("/assets/background.jpg");
   content: "";
   opacity: 0.2;
   top: 0;
@@ -19,7 +16,9 @@
   z-index: -1;
   background-size: cover;
 }
-
+.h-100 {
+  height: 100%;
+}
 .padding0 {
   margin: 0px;
 }
@@ -29,7 +28,7 @@
 }
 
 .fontCairo {
-  font-family: 'Cairo', sans-serif
+  font-family: "Cairo", sans-serif;
 }
 
 .padding1070 {
@@ -42,26 +41,42 @@
   box-shadow: 1px 1px 5px #bababa;
   padding: 0 !important;
   margin: 0;
+  /*    width: 100%;
+ */
   width: 100%;
+
   max-width: 800px;
 }
+.margin-top50 {
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+.ticketsList {
+  color: #757e87;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 5px #bababa;
+  padding: 0 !important;
+  margin: 0;
+  /*    width: 100%;
+ */
+  width: -webkit-fill-available;
 
+  max-width: 800px;
+}
 .containerxs {
-  border: 1px solid #5560C2;
+  border: 1px solid #5560c2;
   border-radius: 4px;
   margin-left: 5%;
   margin-right: 5%;
-
 }
 
 .fontCairo {
-  font-family: 'Cairo', sans-serif
+  font-family: "Cairo", sans-serif;
 }
 
 .margin-top45 {
   padding-top: 45px;
   padding-bottom: 45px;
-
 }
 
 .w-50 {
@@ -93,7 +108,6 @@
 .titlexs {
   font-size: 14px;
   font-weight: bold;
-
 }
 
 .w-100-p {
@@ -111,7 +125,7 @@
   padding-bottom: 0px;
 }
 
-::ng-deep .bgblue>.mat-form-field-appearance-outline .mat-form-field-outline {
+::ng-deep .bgblue > .mat-form-field-appearance-outline .mat-form-field-outline {
   background: #3f51b5;
   border-radius: 8px;
 }
@@ -138,11 +152,11 @@
   margin-left: 10px;
 }
 
-.upload .upload-box .edit>span {
+.upload .upload-box .edit > span {
   color: #666;
   display: block;
   line-height: 2rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .upload .upload-box.hover,
@@ -176,7 +190,6 @@
 .upload .photo-box .photo img {
   width: 100%;
 }
-
 
 /*Files*/
 .upload .file-box.hide {
@@ -225,7 +238,13 @@
   text-decoration: none;
   cursor: pointer;
   background-color: #f1f1f1;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f8f8f8), to(#e9e9e9));
+  background-image: -webkit-gradient(
+    linear,
+    0 0,
+    0 100%,
+    from(#f8f8f8),
+    to(#e9e9e9)
+  );
   background-image: -webkit-linear-gradient(top, #f8f8f8, #e9e9e9);
   background-image: linear-gradient(to bottom, #f8f8f8, #e9e9e9);
   background-repeat: repeat-x;
@@ -247,7 +266,13 @@
   text-shadow: -1px -1px 1px #1278a2;
   box-shadow: inset 1px 1px 1px 0 #65c9e4;
   background-color: #29aee0;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#39b9e3), to(#19a3dd));
+  background-image: -webkit-gradient(
+    linear,
+    0 0,
+    0 100%,
+    from(#39b9e3),
+    to(#19a3dd)
+  );
   background-image: -webkit-linear-gradient(top, #39b9e3, #19a3dd);
   background-image: linear-gradient(to bottom, #39b9e3, #19a3dd);
   background-repeat: repeat-x;
@@ -259,7 +284,13 @@
   cursor: pointer;
   color: #fff;
   background-color: #2dbcf2;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#40c4ef), to(#1ab4f5));
+  background-image: -webkit-gradient(
+    linear,
+    0 0,
+    0 100%,
+    from(#40c4ef),
+    to(#1ab4f5)
+  );
   background-image: -webkit-linear-gradient(top, #40c4ef, #1ab4f5);
   background-image: linear-gradient(to bottom, #40c4ef, #1ab4f5);
   background-repeat: repeat-x;
@@ -299,7 +330,7 @@
 
 .margin-top40 {
   margin-top: 40px;
-  margin-bottom: 40px
+  margin-bottom: 40px;
 }
 
 .padding1070 {
@@ -307,7 +338,7 @@
 }
 
 .mb-20 {
-  margin-bottom: 20px !important
+  margin-bottom: 20px !important;
 }
 
 /*         ::-webkit-input-placeholder { text-align:right; margin:0 !important ;padding:0 !important }
@@ -315,7 +346,7 @@
 /* mozilla solution */
 /*      input:-moz-placeholder { text-align:right; margin:0 !important;padding:0!important } */
 .mb-40 {
-  margin-bottom: 40px !important
+  margin-bottom: 40px !important;
 }
 
 .w60 {
@@ -327,28 +358,25 @@
 }
 
 .container {
-  border: 1px solid #5560C2;
+  border: 1px solid #5560c2;
   border-radius: 4px;
   margin-left: 15%;
   margin-right: 15%;
 }
 
 .containerxs {
-  border: 1px solid #5560C2;
+  border: 1px solid #5560c2;
   border-radius: 4px;
   margin-left: 5%;
   margin-right: 5%;
-
 }
-
-
 
 /* .margin-top45{
     margin-top: 45px;
 
 } */
 .fontCairo {
-  font-family: 'Cairo', sans-serif
+  font-family: "Cairo", sans-serif;
 }
 
 .title {
@@ -371,7 +399,6 @@
 
 .fw600 {
   font-weight: 600;
-
 }
 
 .votes {
@@ -380,7 +407,7 @@
 
 .margin-top40 {
   margin-top: 40px;
-  margin-bottom: 40px
+  margin-bottom: 40px;
 }
 
 .padding1070 {

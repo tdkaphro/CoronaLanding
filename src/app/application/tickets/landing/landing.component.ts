@@ -2,7 +2,7 @@ import { LandingService } from "./landing.service";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-
+import { HttpEvent, HttpEventType } from "@angular/common/http";
 @Component({
   selector: "app-landing",
   templateUrl: "./landing.component.html",
@@ -429,12 +429,14 @@ export class LandingComponent implements OnInit {
   pageId = 0;
   pageHistory = 0;
   public type_id;
+  progress: number = 0;
   public TicketForm: FormGroup;
   public Aprovel: FormGroup;
   public put_id: Number;
   public confirm_id: Number;
   constructor(
     private router: Router,
+
     private _formBuilder: FormBuilder,
     private mainSerivce: LandingService
   ) {}
@@ -478,8 +480,9 @@ export class LandingComponent implements OnInit {
           this.type_id
         )
         .subscribe(res => {
+          console.log("vv");
           this.Tickets = res;
-          if (this.pageId == 1 && this.Tickets.length == 0) {
+          if (this.Tickets.length == 0) {
             this.pageId++;
           }
         });
@@ -505,29 +508,41 @@ export class LandingComponent implements OnInit {
         this.changePage(3);
       });
   }
-
   addTicket() {
-    console.log("upload file");
     if (this.fileToUpload != null) {
-      this.mainSerivce.postFile(this.fileToUpload).subscribe(data => {
-        this.TicketForm.get("media").setValue(data.fileUrl.substr(12));
-        this.mainSerivce
-          .ajouterTicket({
-            state: this.TicketForm.get("state").value,
-            city: this.TicketForm.get("city").value,
-            locationDescription: this.TicketForm.get("locationDescription")
-              .value,
-            description: this.TicketForm.get("description").value,
-            type: this.type_id,
-            title: this.TicketForm.get("title").value,
-            madeBy: this.TicketForm.get("madeBy").value,
-            media: this.TicketForm.get("media").value
-          })
-          .subscribe(res => {
-            this.put_id = res[0].id;
-            this.changePage(3);
-          });
-      });
+      this.mainSerivce
+        .postFile(this.fileToUpload)
+        .subscribe((event: HttpEvent<any>) => {
+          console.log(event, "event");
+          switch (event.type) {
+            case HttpEventType.Sent:
+              console.log("Request has been made!");
+              break;
+            case HttpEventType.ResponseHeader:
+              console.log("Response header has been received!");
+              break;
+            case HttpEventType.UploadProgress:
+              this.progress = Math.round((event.loaded / event.total) * 100);
+              break;
+            case HttpEventType.Response:
+              this.mainSerivce
+                .ajouterTicket({
+                  state: this.TicketForm.get("state").value,
+                  city: this.TicketForm.get("city").value,
+                  locationDescription: this.TicketForm.get(
+                    "locationDescription"
+                  ).value,
+                  description: this.TicketForm.get("description").value,
+                  type: this.type_id,
+                  title: this.TicketForm.get("title").value,
+                  madeBy: this.TicketForm.get("madeBy").value,
+                  media: event.body.fileUrl.substr(6)
+                })
+                .subscribe(res => {
+                  this.changePage(3);
+                });
+          }
+        });
     } else {
       this.mainSerivce
         .ajouterTicket({
@@ -564,10 +579,7 @@ export class LandingComponent implements OnInit {
           tel: this.TicketForm.get("tel").value
         })
         .subscribe(res => {
-          this.TicketForm.get("fullName").reset();
-          this.TicketForm.get("tel").reset();
-          this.Aprovel.reset();
-          this.changePage(1);
+          location.reload();
         });
     }
   }

@@ -45,7 +45,10 @@ export class LandingService {
     const formData: FormData = new FormData();
     formData.append("file", fileToUpload, fileToUpload.name);
 
-    return this.http.post<any>(`${this.uri}/upload`, formData);
+    return this.http.post<any>(`${this.uri}/upload`, formData, {
+      reportProgress: true,
+      observe: "events"
+    });
   }
   getConfirmCount(id) {
     let confirm = 0;

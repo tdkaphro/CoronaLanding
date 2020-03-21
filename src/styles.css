@@ -1,18 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css?family=Cairo&display=swap');
-h1{
-    font-family:'Cairo',sans-serif
-
+@import url("https://fonts.googleapis.com/css?family=Cairo&display=swap");
+h1 {
+  font-family: "Cairo", sans-serif;
 }
-button{
-    font-family:'Cairo',sans-serif
-
+button {
+  font-family: "Cairo", sans-serif;
 }
-body{
-    margin: 0px;
-/*     height: 100vh !important;
+body {
+  margin: 0px;
+  /*     height: 100vh !important;
     max-height: 100vh !important; */
-
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  height: 100%;
+
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

@@ -1,64 +1,170 @@
-<div *ngIf="pageId != 0 && pageId != 3" style="position:fixed;top: 10px;right: 20px;">
-  <button mat-raised-button (click)="backPage()" style="background-color: #3f51b5;color: white;">
-    رجوع<mat-icon dir='rtl'>navigate_next</mat-icon>
+<div
+  *ngIf="pageId != 0 && pageId != 3"
+  style="position:fixed;top: 10px;right: 20px;"
+>
+  <button
+    mat-raised-button
+    (click)="backPage()"
+    style="background-color: #3f51b5;color: white;"
+  >
+    رجوع<mat-icon dir="rtl">navigate_next</mat-icon>
   </button>
 </div>
-<form [formGroup]="TicketForm">
-  <div class="imgContainer" *ngIf="pageId == 0" fxLayoutAlign="center center" fxLayout="column">
+<form [formGroup]="TicketForm" *ngIf="pageId != 4" class="h-100">
+  <div
+    class="imgContainer "
+    *ngIf="pageId == 0"
+    fxLayoutAlign="center center"
+    fxLayout="column"
+  >
     <h1 class="padding0">بلغ ... باش نحميو ولادنا</h1>
     <h1 class="padding0">و تونس أرض جدادنا</h1>
-    <div class="w-100 mt-40 paddingLpaddingR" fxLayout="row" fxLayout.sm="column-reverse" fxLayout.xs="column-reverse"
-      fxLayoutGap="20px" fxLayoutGap.xs="0px" fxLayoutAlign="center center">
-      <div fxLayout="row" ngClass.xs="w-100-p" ngClass.sm="w-100-p" fxLayoutAlign="center center"
-        fxLayoutAlign.sm="space-around center" fxLayoutAlign.xs="space-between center" fxLayoutGap="20px"
-        fxLayoutGap.xs="0px">
-        <mat-form-field *ngIf="selectedIndex != undefined" class="bgblue" floatLabel="always" appearance="outline">
+    <div
+      class="w-100 mt-40 paddingLpaddingR"
+      fxLayout="row"
+      fxLayout.sm="column-reverse"
+      fxLayout.xs="column-reverse"
+      fxLayoutGap="20px"
+      fxLayoutGap.xs="0px"
+      fxLayoutAlign="center center"
+    >
+      <div
+        fxLayout="row"
+        ngClass.xs="w-100-p"
+        ngClass.sm="w-100-p"
+        fxLayoutAlign="center center"
+        fxLayoutAlign.sm="space-around center"
+        fxLayoutAlign.xs="space-between center"
+        fxLayoutGap="20px"
+        fxLayoutGap.xs="0px"
+      >
+        <mat-form-field
+          *ngIf="selectedIndex != undefined"
+          class="bgblue"
+          floatLabel="always"
+          appearance="outline"
+        >
           <mat-select formControlName="city">
-            <mat-option *ngFor="let item of Gouvernorat[selectedIndex].subGouvernorat" [value]="item.nom">
+            <mat-option
+              *ngFor="let item of Gouvernorat[selectedIndex].subGouvernorat"
+              [value]="item.nom"
+            >
               {{ item.nom }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="selectedIndex == undefined" floatLabel="always" class="  lezem" appearance="outline">
+        <mat-form-field
+          *ngIf="selectedIndex == undefined"
+          floatLabel="always"
+          class="  lezem"
+          appearance="outline"
+        >
           <mat-select formControlName="city" [disabled]="true"> </mat-select>
           <mat-error>
             Le Arianadelegation est requis
           </mat-error>
         </mat-form-field>
-        <div ngClass=" title fontCairo " ngClass.xs="titlexse" fxLayoutAlign="center center">
+        <div
+          ngClass=" title fontCairo "
+          ngClass.xs="titlexse"
+          fxLayoutAlign="center center"
+        >
           : المعتمدية
         </div>
       </div>
 
-      <div fxLayoutAlign="center center" fxLayoutAlign.sm="space-around center" fxLayoutAlign.xs="space-between center"
-        fxLayout="row" fxLayoutGap="10px" fxLayoutGap.xs="0px" ngClass.xs="w-100-p" ngClass.sm="w-100-p">
+      <div
+        fxLayoutAlign="center center"
+        fxLayoutAlign.sm="space-around center"
+        fxLayoutAlign.xs="space-between center"
+        fxLayout="row"
+        fxLayoutGap="10px"
+        fxLayoutGap.xs="0px"
+        ngClass.xs="w-100-p"
+        ngClass.sm="w-100-p"
+      >
         <div>
-          <mat-form-field class="   bgblue" floatLabel="always" appearance="outline">
-            <mat-select formControlName="state" (valueChange)="gouvernoratChange($event)">
+          <mat-form-field
+            class="   bgblue"
+            floatLabel="always"
+            appearance="outline"
+          >
+            <mat-select
+              formControlName="state"
+              (valueChange)="gouvernoratChange($event)"
+            >
               <mat-option *ngFor="let item of Gouvernorat" [value]="item.nom">
                 {{ item.nom }}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        <div ngClass=" title fontCairo " ngClass.xs="titlexse" fxLayoutAlign="center center">
+        <div
+          ngClass=" title fontCairo "
+          ngClass.xs="titlexse"
+          fxLayoutAlign="center center"
+        >
           : الولاية
         </div>
       </div>
     </div>
-    <button class="margin-top40 fontCairo padding1070" mat-raised-button color="primary" (click)="changePage(6)"
+    <button
+      class="margin-top40 fontCairo padding1070"
+      mat-raised-button
+      color="primary"
+      (click)="changePage(6)"
       [disabled]="
         this.TicketForm.get('state').value == null ||
         this.TicketForm.get('city').value == null
-      ">
+      "
+    >
       بلغ
     </button>
   </div>
-  <div *ngIf="pageId == 1" fxLayoutGap="45px" fxLayout="column" fxLayoutAlign="center center" class="margin-top45">
-    <div class="fontCairo title " fxLayoutAlign="center center" *ngIf="Tickets.length == 0">
+  <div
+    *ngIf="pageId == 6"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    class="margin-top45 bgGrey h-100 "
+  >
+    <div
+      style="border:1px solid #5560C2; border-radius: 4px;max-width: 800px;width: 80%;"
+    >
+      <mat-list style="width: 100%;">
+        <mat-list-item *ngFor="let type of types" style="margin:10px;">
+          <button
+            mat-raised-button
+            style="width:calc(100% - 20px);cursor: pointer;"
+            (click)="Tabligh(type.id)"
+          >
+            <div mat-line>{{ type.nom }}</div>
+            <div mat-line>{{ type.description }}</div>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+
+  <div
+    *ngIf="pageId == 1"
+    fxLayoutGap="45px"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    class="margin-top45 "
+  >
+    <div
+      class="fontCairo title "
+      fxLayoutAlign="center center"
+      *ngIf="Tickets.length == 0"
+    >
       لا يوجد أي بلاغ في هذا المكان
     </div>
-    <div class="container" *ngFor="let ticket of Tickets" style="padding: 25px !important;" ngClass.xs="containerxs">
+    <div
+      class="ticketsList"
+      *ngFor="let ticket of Tickets"
+      style="padding: 25px !important;"
+      ngClass.xs="containerxs"
+    >
       <div fxLayoutAlign="space-between center">
         <div class="fontCairo title">{{ getType(ticket.type) }}</div>
         <div class="fontCairo title">{{ ticket.title }}</div>
@@ -72,8 +178,13 @@
       <div fxLayoutAlign="space-between center">
         <div class="fontCairo votes fw600">{{ ticket.count }} تأييد</div>
         <div class="fontCairo title">
-          <button class=" fontCairo" mat-raised-button color="primary" (click)="Confirm(ticket.id, 4)"
-            routerLinkActive="router-link-active">
+          <button
+            class=" fontCairo"
+            mat-raised-button
+            color="primary"
+            (click)="Confirm(ticket.id, 4)"
+            routerLinkActive="router-link-active"
+          >
             أكد
           </button>
         </div>
@@ -81,59 +192,156 @@
     </div>
 
     <div fxLayoutAlign="center center">
-      <button class="margin-top40 fontCairo padding1070" mat-raised-button color="primary" (click)="changePage(2)">
+      <button
+        class="margin-top50 fontCairo padding1070"
+        mat-raised-button
+        color="primary"
+        (click)="changePage(2)"
+      >
         بلغ
       </button>
     </div>
   </div>
-  <div *ngIf="pageId == 2" fxLayoutGap="45px" fxLayout="column" class="padding-top45  padding-bottom45  bgGrey"
-    fxLayoutAlign="center center">
-    <div class="container " style="padding: 25px ;" fxLayoutGap="10px" fxLayoutGap.xs="10px" fxLayout="column">
-      <div class=" w-100 paddingLpaddingR mt-40 " fxLayoutAlign="row" fxLayoutGap.xs="0px"
-        fxLayoutAlign="space-between center">
+  <div
+    *ngIf="pageId == 2"
+    fxLayoutGap="45px"
+    fxLayout="column"
+    class="padding-top45  padding-bottom45  bgGrey h-100"
+    fxLayoutAlign="center center"
+  >
+    <div
+      class="container "
+      style="padding: 25px ;"
+      fxLayoutGap="10px"
+      fxLayoutGap.xs="10px"
+      fxLayout="column"
+    >
+      <div
+        class=" w-100 paddingLpaddingR mt-40 "
+        fxLayoutAlign="row"
+        fxLayoutGap.xs="0px"
+        fxLayoutAlign="space-between center"
+      >
         <div ngClass="w-70" ngClass.xs="w-60">
-          <mat-form-field class="  w-100 lezem" floatLabel="always" appearance="outline">
-            <input autocomplete="off" class="inputrtl fontCairoInput" matInput formControlName="locationDescription"
-              style="text-align: right; direction:RTL" placeholder="المكان بالتدقيق
-                    " required />
+          <mat-form-field
+            class="  w-100 lezem"
+            floatLabel="always"
+            appearance="outline"
+          >
+            <input
+              autocomplete="off"
+              class="inputrtl fontCairoInput"
+              matInput
+              formControlName="locationDescription"
+              style="text-align: right; direction:RTL"
+              placeholder="المكان بالتدقيق
+                    "
+              required
+            />
           </mat-form-field>
         </div>
-        <div class=" title fontCairo w-30 " ngClass.xs="titlef15 w-40-p" fxLayoutAlign="center center">
+        <div
+          class=" title fontCairo w-30 "
+          ngClass.xs="titlef15 w-40-p"
+          fxLayoutAlign="center center"
+        >
           : المكان بالتدقيق
         </div>
       </div>
 
-      <div class="paddingLpaddingR w-100" fxLayoutAlign="row" fxLayoutGap.xs="0px" fxLayoutAlign="space-between center">
+      <div
+        class="paddingLpaddingR w-100"
+        fxLayoutAlign="row"
+        fxLayoutGap.xs="0px"
+        fxLayoutAlign="space-between center"
+      >
         <div ngClass="w-70" ngClass.xs="w-60">
-          <mat-form-field class=" w-100  lezem " floatLabel="always" appearance="outline">
-            <input autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom" formControlName="title"
-              style="text-align: right; direction:RTL" placeholder="تلخيص التجاوز " required />
+          <mat-form-field
+            class=" w-100  lezem "
+            floatLabel="always"
+            appearance="outline"
+          >
+            <input
+              autocomplete="off"
+              class="inputrtl fontCairoInput"
+              matInput
+              name="prenom"
+              formControlName="title"
+              style="text-align: right; direction:RTL"
+              placeholder="تلخيص التجاوز "
+              required
+            />
           </mat-form-field>
         </div>
-        <div class=" title fontCairo w-30" ngClass.xs="titlef15 w-40-p" fxLayoutAlign="center center">
+        <div
+          class=" title fontCairo w-30"
+          ngClass.xs="titlef15 w-40-p"
+          fxLayoutAlign="center center"
+        >
           : تلخيص التجاوز
         </div>
       </div>
-      <div class="w-100 paddingLpaddingR" fxLayoutAlign="row" fxLayoutGap.xs="0px" fxLayoutAlign="space-between center">
+      <div
+        class="w-100 paddingLpaddingR"
+        fxLayoutAlign="row"
+        fxLayoutGap.xs="0px"
+        fxLayoutAlign="space-between center"
+      >
         <div ngClass="w-70" ngClass.xs="w-60">
-          <mat-form-field class=" w-100  lezem" floatLabel="always" appearance="outline">
-            <input autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom" formControlName="madeBy"
-              style="text-align: right; direction:RTL" placeholder=" القائم بالتجاوز" required />
+          <mat-form-field
+            class=" w-100  lezem"
+            floatLabel="always"
+            appearance="outline"
+          >
+            <input
+              autocomplete="off"
+              class="inputrtl fontCairoInput"
+              matInput
+              name="prenom"
+              formControlName="madeBy"
+              style="text-align: right; direction:RTL"
+              placeholder=" القائم بالتجاوز"
+              required
+            />
           </mat-form-field>
         </div>
-        <div class=" title fontCairo w-30" ngClass.xs="titlef15 w-40-p" fxLayoutAlign="center center">
+        <div
+          class=" title fontCairo w-30"
+          ngClass.xs="titlef15 w-40-p"
+          fxLayoutAlign="center center"
+        >
           : القائم بالتجاوز
         </div>
       </div>
-      <div class="w-100 paddingLpaddingR" fxLayoutAlign="row" fxLayoutGap.xs="0px" fxLayoutAlign="space-between center">
+      <div
+        class="w-100 paddingLpaddingR"
+        fxLayoutAlign="row"
+        fxLayoutGap.xs="0px"
+        fxLayoutAlign="space-between center"
+      >
         <div ngClass="w-70" ngClass.xs="w-60">
-          <mat-form-field class=" w-100  lezem" floatLabel="always" appearance="outline">
-            <textarea autocomplete="off" class="inputrtl fontCairoInput" matInput name="prenom"
-              formControlName="description" style="text-align: right; direction:RTL" placeholder=" وصف التجاوز"
-              required></textarea>
+          <mat-form-field
+            class=" w-100  lezem"
+            floatLabel="always"
+            appearance="outline"
+          >
+            <textarea
+              autocomplete="off"
+              class="inputrtl fontCairoInput"
+              matInput
+              name="prenom"
+              formControlName="description"
+              style="text-align: right; direction:RTL"
+              placeholder=" وصف التجاوز"
+              required
+            ></textarea>
           </mat-form-field>
         </div>
-        <div ngClass=" title fontCairo w-30" ngClass.xs="titlef15 fontCairo w-40-p" fxLayoutAlign="center center">
+        <div
+          ngClass=" title fontCairo w-30"
+          ngClass.xs="titlef15 fontCairo w-40-p"
+          fxLayoutAlign="center center"
+        >
           : وصف التجاوز
         </div>
       </div>
@@ -154,62 +362,132 @@
                   Select a file
                 </button>
               </div>
-              <input autocomplete="off" style="display: none" type="file" (change)="onFileChanged($event)"
-                accept="image/png,image/jpeg,image,gif,video/mp4,video/avi,audio/mp3,audio/wav,audio/m4a" #fileInput />
+              <input
+                autocomplete="off"
+                style="display: none"
+                type="file"
+                (change)="onFileChanged($event)"
+                accept="image/png,image/jpeg,image,gif,video/mp4,video/avi,audio/mp3,audio/wav,audio/m4a"
+                #fileInput
+              />
             </div>
           </div>
         </div>
       </div>
       <div fxLayoutAlign="center center">
-        <button class="margin-top40 fontCairo padding1070" mat-raised-button color="primary" (click)="addTicket()">
+        <button
+          class="margin-top50 fontCairo padding1070"
+          mat-raised-button
+          color="primary"
+          (click)="addTicket()"
+        >
           إضافة البلاغ
         </button>
       </div>
     </div>
   </div>
-  <div *ngIf="pageId == 3" fxLayoutGap="45px" fxLayout="column" fxLayoutAlign="center center"
-    class="margin-top45 bgGrey">
-    <div class=" container" style="padding: 25px ;" fxLayoutGap="40px" fxLayoutGap.xs="10px" fxLayout="column">
-      <div class="title fontCairo paddingLpaddingR  mt-40 mb-20" style="text-align: center;"
-        fxLayoutAlign="center center">
+  <div
+    *ngIf="pageId == 3"
+    fxLayoutGap="45px"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    class="margin-top45 bgGrey h-100"
+  >
+    <div
+      class=" container"
+      style="padding: 25px ;"
+      fxLayoutGap="40px"
+      fxLayoutGap.xs="10px"
+      fxLayout="column"
+    >
+      <div
+        class="title fontCairo paddingLpaddingR  mt-40 mb-20"
+        style="text-align: center;"
+        fxLayoutAlign="center center"
+      >
         في البداية نحبو نشكروك على التبليغ و مساهمتك في مساعدة بلادنا
       </div>
       <div class=" mb-20 " fxLayoutAlign="center center">
         <img src="assets/tunisia.png" />
       </div>
 
-      <div class="title fontCairo paddingLpaddingR   mb-20" style="text-align: center;" fxLayoutAlign="center center">
+      <div
+        class="title fontCairo paddingLpaddingR   mb-20"
+        style="text-align: center;"
+        fxLayoutAlign="center center"
+      >
         كان تحب تزيد تعاونا خليلنا معطياتك و تنجم متحطش كل شيئ تأكد إنو معلوماتك
         بش تكون محفوظة بكل سرية
       </div>
-      <div class="w-100" fxLayoutAlign="row" fxLayoutAlign="space-between center">
+      <div
+        class="w-100"
+        fxLayoutAlign="row"
+        fxLayoutAlign="space-between center"
+      >
         <div ngClass="w-70" ngClass.xs="w-60">
-          <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
-            <input autocomplete="off" style="direction:RTL ;text-align: right  " matInput name="prenom"
-              formControlName="fullName" placeholder="الإسم و اللقب
-                    " />
+          <mat-form-field
+            class=" w-100 paddingLpaddingR lezem"
+            floatLabel="always"
+            appearance="outline"
+          >
+            <input
+              autocomplete="off"
+              style="direction:RTL ;text-align: right  "
+              matInput
+              name="prenom"
+              formControlName="fullName"
+              placeholder="الإسم و اللقب
+                    "
+            />
           </mat-form-field>
         </div>
-        <div class=" title fontCairo w-30" ngClass.xs="titlef15 fontCairo w-40-p" fxLayoutAlign="center center">
+        <div
+          class=" title fontCairo w-30"
+          ngClass.xs="titlef15 fontCairo w-40-p"
+          fxLayoutAlign="center center"
+        >
           : الإسم و اللقب
         </div>
       </div>
-      <div class="w-100" fxLayoutAlign="row" fxLayoutAlign="space-between center">
+      <div
+        class="w-100"
+        fxLayoutAlign="row"
+        fxLayoutAlign="space-between center"
+      >
         <div ngClass="w-70" ngClass.xs="w-60">
-          <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
-            <input autocomplete="off" style="text-align: right; direction:RTL" matInput name="prenom"
-              formControlName="tel" placeholder="رقم الهاتف
-                    " />
+          <mat-form-field
+            class=" w-100 paddingLpaddingR lezem"
+            floatLabel="always"
+            appearance="outline"
+          >
+            <input
+              autocomplete="off"
+              style="text-align: right; direction:RTL"
+              matInput
+              name="prenom"
+              formControlName="tel"
+              placeholder="رقم الهاتف
+                    "
+            />
           </mat-form-field>
         </div>
-        <div class=" title fontCairo w-30" ngClass.xs="titlef15 fontCairo w-40-p" fxLayoutAlign="center center">
+        <div
+          class=" title fontCairo w-30"
+          ngClass.xs="titlef15 fontCairo w-40-p"
+          fxLayoutAlign="center center"
+        >
           : رقم الهاتف
         </div>
       </div>
 
       <div fxLayoutAlign="center center">
-        <button class="mb-40 fontCairo padding1070" mat-raised-button color="primary" (click)="addInfo()"
-          routerLinkActive="router-link-active">
+        <button
+          class="mb-40 fontCairo padding1070"
+          mat-raised-button
+          color="primary"
+          (click)="addInfo()"
+          routerLinkActive="router-link-active"
+        >
           إضافة
         </button>
       </div>
@@ -217,50 +495,75 @@
   </div>
 </form>
 
-<form [formGroup]="Aprovel">
-  <div *ngIf="pageId == 4" fxLayoutGap="45px" fxLayout="column" fxLayoutAlign="center center"
-    class="margin-top45 bgGrey">
-    <div class=" container" style="padding: 25px ;" fxLayoutGap="40px" fxLayoutGap.xs="10px" fxLayout="column">
-      <div class="title fontCairo paddingLpaddingR  mt-40 mb-20" style="text-align: center;"
-        fxLayoutAlign="center center">
+<form [formGroup]="Aprovel" *ngIf="pageId == 4" class="h-100">
+  <div
+    *ngIf="pageId == 4"
+    fxLayoutGap="45px"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    class="margin-top45 bgGrey h-100"
+  >
+    <div
+      class=" container"
+      style="padding: 25px ;"
+      fxLayoutGap="40px"
+      fxLayoutGap.xs="10px"
+      fxLayout="column"
+    >
+      <div
+        class="title fontCairo paddingLpaddingR  mt-40 mb-20"
+        style="text-align: center;"
+        fxLayoutAlign="center center"
+      >
         نشكروك على تاكيد صحة المعلومة
       </div>
       <div class=" mb-20 " fxLayoutAlign="center center">
         <img src="assets/tunisia.png" />
       </div>
 
-      <div class="w-100" fxLayoutAlign="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+      <div
+        class="w-100"
+        fxLayoutAlign="row"
+        fxLayoutGap="20px"
+        fxLayoutAlign="space-around center"
+      >
         <div class="w-70">
-          <mat-form-field class=" w-100 paddingLpaddingR lezem" floatLabel="always" appearance="outline">
-            <textarea autocomplete="off" style="text-align: right; direction:RTL" matInput name="comment"
-              formControlName="comment" placeholder="اكتب هنا...
-                  "></textarea>
+          <mat-form-field
+            class=" w-100 paddingLpaddingR lezem"
+            floatLabel="always"
+            appearance="outline"
+          >
+            <textarea
+              autocomplete="off"
+              style="text-align: right; direction:RTL"
+              matInput
+              name="comment"
+              formControlName="comment"
+              placeholder="اكتب هنا...
+                  "
+            ></textarea>
           </mat-form-field>
         </div>
-        <div class=" title fontCairo w-30" ngClass.xs="titlexs" fxLayoutAlign="center center">
+        <div
+          class=" title fontCairo w-30"
+          ngClass.xs="titlexs"
+          fxLayoutAlign="center center"
+        >
           : تعليق
         </div>
       </div>
 
       <div fxLayoutAlign="center center">
-        <button class="mb-40 fontCairo padding1070" mat-raised-button color="primary" (click)="addComment()"
-          routerLinkActive="router-link-active">
+        <button
+          class="mb-40 fontCairo padding1070"
+          mat-raised-button
+          color="primary"
+          (click)="addComment()"
+          routerLinkActive="router-link-active"
+        >
           أكد
         </button>
       </div>
     </div>
   </div>
 </form>
-
-<div *ngIf="pageId == 6" fxLayout="column" fxLayoutAlign="center center" class="margin-top45 bgGrey">
-  <div style="border:1px solid #5560C2; border-radius: 4px;max-width: 800px;width: 80%;">
-    <mat-list style="width: 100%;">
-      <mat-list-item *ngFor="let type of types" style="margin:10px;">
-        <button mat-raised-button style="width:calc(100% - 20px);cursor: pointer;" (click)="Tabligh(type.id)">
-          <div mat-line>{{ type.nom }}</div>
-          <div mat-line>{{ type.description }}</div>
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </div>
-</div>
